@@ -1,6 +1,7 @@
 const Discord = require("discord.js")
 const { Client } = require('pg');
 const client = new Discord.Client()
+const prefix = "!"
 
 const pgClient = new Client({connectionString: process.env.DATABASE_URL, ssl: true});
 
@@ -58,7 +59,7 @@ client.on("message", async message => {
     if (!message.guild) return
     if(message.author.bot) return
 
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
 
@@ -86,7 +87,7 @@ client.on("message", async message => {
       message.member.addRole(message.guild.roles.find("name", "Verified")).catch(console.error);
   }else if (message.channel.id == `391409706477813771`) return message.delete()
 
-    if(message.content.indexOf(config.prefix) !== 0) return;
+    if(message.content.indexOf(prefix) !== 0) return;
     if (command === "points") {
         let member = message.mentions.members.first()
         if (member) { message.channel.send(`${member.displayName} has ${saveData[member.id]} point${saveData[member.id] == 1 && "" || "s"}.`);
