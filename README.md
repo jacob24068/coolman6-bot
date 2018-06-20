@@ -1,1 +1,0 @@
-# coolman6-bot
