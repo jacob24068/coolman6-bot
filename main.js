@@ -87,7 +87,7 @@ client.on("message", async message => {
       log.send(`${message.author} has verified at ${Date()}`)
       message.reply(`Welcome.`)
       message.member.addRole(message.guild.roles.find("name", "Verified")).catch(console.error);
-  }else if (message.channel.id == `391409706477813771`) return message.delete()
+  }else if (message.channel.id == `459081091240689670`) return message.delete()
 
     if(message.content.indexOf(prefix) !== 0) return;
     if (command === "points") {
