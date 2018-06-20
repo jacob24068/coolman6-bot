@@ -13,6 +13,8 @@ pgClient.query(`SELECT * FROM userdata`, null, (err, res) => {
     }
   })
 
+let saveData = {}
+
 const save = function() {
   pgClient.query(`DELETE FROM userdata`, null, (err, res) => {
     if (err) {console.log(err.stack)}
