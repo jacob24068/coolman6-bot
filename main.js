@@ -86,7 +86,7 @@ client.on("message", async message => {
     if (command === "verify" && message.channel.id == `459081091240689670`) {
       log.send(`${message.author} has verified at ${Date()}`)
       message.reply(`Welcome.`)
-      message.member.addRole(message.guild.roles.find("name", "Verified")).catch(console.error);
+      message.member.addRole(message.guild.roles.find("name", "Fan")).catch(console.error);
   }else if (message.channel.id == `459081091240689670`) return message.delete()
 
     if(message.content.indexOf(prefix) !== 0) return;
