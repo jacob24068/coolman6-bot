@@ -29,7 +29,7 @@ let log
 
 client.on("ready", () => {
     console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
-    client.user.setPresence({ game: { name: `over coolman6's server`, type: 3 } });
+    client.user.setPresence({ game: { name: `over Brice's server`, type: 3 } });
     log = client.channels.get(`459077897525788692`)
   });
 
