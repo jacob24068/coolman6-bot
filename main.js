@@ -1,3 +1,6 @@
+let streaming = {}
+const twitchid = process.env.clientID
+
 const Discord = require("discord.js")
 const { Client } = require('pg');
 const client = new Discord.Client()
@@ -26,11 +29,13 @@ const save = function() {
 
 let progress = 0
 let log
+let welcome
 
 client.on("ready", () => {
     console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
     client.user.setPresence({ game: { name: `over Brice's server`, type: 3 } });
     log = client.channels.get(`459077897525788692`)
+    welcome = client.channels.get(`459076914691309609`)
   });
 
 function sortByKey(jsObj){
@@ -86,6 +91,16 @@ client.on("message", async message => {
     if (command === "verify" && message.channel.id == `459081091240689670`) {
       log.send(`${message.author} has verified at ${Date()}`)
       message.delete()
+      welcome.send({
+        "embed": {
+          "title": `${message.author} Joined`,
+          "color": 1542474,
+          "timestamp": new Date(),
+          "thumbnail": {
+            "url": message.author.displayAvatarURL
+          }
+        }
+      })
       message.member.addRole(message.guild.roles.find("name", "Fan")).catch(console.error);
   }else if (message.channel.id == `459081091240689670`) return message.delete()
 
@@ -187,3 +202,46 @@ client.on("message", async message => {
 
   
 client.login(process.env.BOT_TOKEN);
+/*
+client.on("presenceUpdate", (old, user) => {
+    if (!user.roles.some(r => ["Brice"].includes(r.name))) return
+    if (streaming[user.id] && !streaming[user.id].equals(user.presence)) return delete streaming[user.id]
+    let game = user.presence.game
+    if (!game) return
+    if (!streamnotifications) return
+    if (game.type == 0 && streaming[user.id]) return delete streaming[user.id]
+    if (game.type == 0) return
+    streaming[user.id] = user.presence
+    streamnotifications.send(`@here`)
+    let username = game.url.split("/")[3]
+    request(`https://api.twitch.tv/kraken/channels/${username}?client_id=${twitchid}`, function(err, res, body) {
+        if (body) {
+            if (!body) return
+            let gamename = String(game.name)
+            body = JSON.parse(body)
+            streamnotifications.send({
+                "embed": {
+                    "title": `${user.displayName} has started streaming!`,
+                    "description": `You can watch the stream [here](${game.url})`,
+                    "color": 13377970,
+                    "footer": {
+                        "text": "*Information based on twitch and user settings."
+                    },
+                    "thumbnail": {
+                        "url": body["logo"]
+                    },
+                    "fields": [{
+                        "name": `Streaming "${game.name}"`,
+                        "value": `Playing ${body["game"]}`
+                    }]
+                }
+            })
+        }
+    })
+})*/
+client.on('guildMemberAdd', member => {
+    log.send(`${member} has joined at ${new Date()}`)
+});
+client.on('guildMemberRemove', member => {
+    log.send(`${member} has left at ${new Date()}`)
+});
