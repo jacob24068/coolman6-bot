@@ -206,8 +206,8 @@ client.login(process.env.BOT_TOKEN);
 
 client.on("presenceUpdate", (old, user) => {
     if (!user.roles.some(r => ["Brice"].includes(r.name))) return
-    let game = user.presence.game
     console.log(user.presence)
+    let game = user.presence.game
     if (!game.streaming && streaming[user.id]) return delete streaming[user.id]
     if (!game.streaming) return
     streaming[user.id] = true
