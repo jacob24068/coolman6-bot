@@ -208,6 +208,8 @@ client.on("presenceUpdate", (old, user) => {
     if (!user.roles.some(r => ["Brice"].includes(r.name))) return
     console.log(user.presence)
     let game = user.presence.game
+    if (!game && streaming[user.id]) return delete streaming[user.id]
+    if (!game) return
     if (!game.streaming && streaming[user.id]) return delete streaming[user.id]
     if (!game.streaming) return
     streaming[user.id] = true
