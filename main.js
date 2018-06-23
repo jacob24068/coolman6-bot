@@ -32,7 +32,6 @@ let log
 let welcome
 
 client.on("ready", () => {
-    console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
     client.user.setPresence({ game: { name: `over Brice's server`, type: 3 } });
     log = client.channels.get(`459077897525788692`)
     welcome = client.channels.get(`459076914691309609`)
@@ -93,7 +92,7 @@ client.on("message", async message => {
       message.delete()
       welcome.send({
         "embed": {
-          "title": `${message.author} Joined`,
+          "title": `${message.member.displayName} joined.`,
           "color": 1542474,
           "timestamp": new Date(),
           "thumbnail": {
