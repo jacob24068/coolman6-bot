@@ -30,9 +30,11 @@ const save = function() {
 let progress = 0
 let log
 let welcome
+let notifications
 
 client.on("ready", () => {
     client.user.setPresence({ game: { name: `over Brice's server`, type: 3 } });
+    notifications = client.channels.get(`459078238283497472`)
     log = client.channels.get(`459077897525788692`)
     welcome = client.channels.get(`459076914691309609`)
   });
@@ -201,11 +203,12 @@ client.on("message", async message => {
 
   
 client.login(process.env.BOT_TOKEN);
-/*
+
 client.on("presenceUpdate", (old, user) => {
-    if (!user.roles.some(r => ["Brice"].includes(r.name))) return
-    if (streaming[user.id] && !streaming[user.id].equals(user.presence)) return delete streaming[user.id]
-    let game = user.presence.game
+    //if (!user.roles.some(r => ["Brice"].includes(r.name))) return
+   // if (streaming[user.id] && !streaming[user.id].equals(user.presence)) return delete streaming[user.id]
+    console.log(user.presence)
+    /*let game = user.presence.game
     if (!game) return
     if (!streamnotifications) return
     if (game.type == 0 && streaming[user.id]) return delete streaming[user.id]
@@ -236,8 +239,8 @@ client.on("presenceUpdate", (old, user) => {
                 }
             })
         }
-    })
-})*/
+    })*/
+})
 client.on('guildMemberAdd', member => {
     log.send(`${member} has joined at ${new Date()}`)
 });
