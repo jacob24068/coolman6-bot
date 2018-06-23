@@ -205,23 +205,19 @@ client.on("message", async message => {
 client.login(process.env.BOT_TOKEN);
 
 client.on("presenceUpdate", (old, user) => {
-    //if (!user.roles.some(r => ["Brice"].includes(r.name))) return
-   // if (streaming[user.id] && !streaming[user.id].equals(user.presence)) return delete streaming[user.id]
-    console.log(user.presence)
-    /*let game = user.presence.game
-    if (!game) return
-    if (!streamnotifications) return
-    if (game.type == 0 && streaming[user.id]) return delete streaming[user.id]
-    if (game.type == 0) return
-    streaming[user.id] = user.presence
-    streamnotifications.send(`@here`)
+    if (!user.roles.some(r => ["Brice"].includes(r.name))) return
+    let game = user.presence.game
+    if (!game.streaming && streaming[user.id]) return delete streaming[user.id]
+    if (!game.streaming) return
+    streaming[user.id] = true
     let username = game.url.split("/")[3]
+    console.log(user.presence)
     request(`https://api.twitch.tv/kraken/channels/${username}?client_id=${twitchid}`, function(err, res, body) {
         if (body) {
             if (!body) return
             let gamename = String(game.name)
             body = JSON.parse(body)
-            streamnotifications.send({
+            notifications.send({
                 "embed": {
                     "title": `${user.displayName} has started streaming!`,
                     "description": `You can watch the stream [here](${game.url})`,
@@ -239,7 +235,7 @@ client.on("presenceUpdate", (old, user) => {
                 }
             })
         }
-    })*/
+    })
 })
 client.on('guildMemberAdd', member => {
     log.send(`${member} has joined at ${new Date()}`)
