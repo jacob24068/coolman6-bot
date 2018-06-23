@@ -207,11 +207,11 @@ client.login(process.env.BOT_TOKEN);
 client.on("presenceUpdate", (old, user) => {
     if (!user.roles.some(r => ["Brice"].includes(r.name))) return
     let game = user.presence.game
+    console.log(user.presence)
     if (!game.streaming && streaming[user.id]) return delete streaming[user.id]
     if (!game.streaming) return
     streaming[user.id] = true
     let username = game.url.split("/")[3]
-    console.log(user.presence)
     request(`https://api.twitch.tv/kraken/channels/${username}?client_id=${twitchid}`, function(err, res, body) {
         if (body) {
             if (!body) return
