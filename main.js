@@ -33,13 +33,15 @@ let log
 let welcome
 let notifications
 let role
+let guild
 
 client.on("ready", () => {
     client.user.setPresence({ game: { name: `over Brice's server`, type: 3 } });
+    guild = client.guilds.get(`459074666137649162`)
     notifications = client.channels.get(`459078238283497472`)
     log = client.channels.get(`459077897525788692`)
     welcome = client.channels.get(`459076914691309609`)
-    role = client.roles.get(`460105041563615234`)
+    role = guild.roles.get(`460105041563615234`)
   });
 
 function sortByKey(jsObj){
