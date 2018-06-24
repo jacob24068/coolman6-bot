@@ -208,7 +208,6 @@ client.on("message", async message => {
       request(`https://api.twitch.tv/kraken/channels/bigbricegaming?client_id=${twitchid}`, function(err, res, body) {
         if (body) {
             if (!body) return
-            let gamename = String(game.name)
             body = JSON.parse(body)
             role.setMentionable(true)
             notifications.send('<@&460105041563615234>')
