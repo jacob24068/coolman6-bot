@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "discord.js": "11.3.2",
-    "pg": "7.4.3"
+    "pg": "7.4.3",
+    "request": "2.87.0"
   }
 }
