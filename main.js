@@ -1,6 +1,7 @@
 let streaming = {}
 const twitchid = process.env.clientID
 
+const request = require('request')
 const Discord = require("discord.js")
 const { Client } = require('pg');
 const client = new Discord.Client()
@@ -31,12 +32,14 @@ let progress = 0
 let log
 let welcome
 let notifications
+let role
 
 client.on("ready", () => {
     client.user.setPresence({ game: { name: `over Brice's server`, type: 3 } });
     notifications = client.channels.get(`459078238283497472`)
     log = client.channels.get(`459077897525788692`)
     welcome = client.channels.get(`459076914691309609`)
+    role = client.roles.get(`460105041563615234`)
   });
 
 function sortByKey(jsObj){
@@ -198,6 +201,35 @@ client.on("message", async message => {
           ]
         }
       })}
+    }else if (command === "teststream") {
+      if (!message.author.id == `188386891182112769`) return;
+      request(`https://api.twitch.tv/kraken/channels/bigbricegaming?client_id=${twitchid}`, function(err, res, body) {
+        if (body) {
+            if (!body) return
+            let gamename = String(game.name)
+            body = JSON.parse(body)
+            role.setMentionable(true)
+            notifications.send('<@&460105041563615234>')
+            role.setMentionable(false)
+            notifications.send({
+                "embed": {
+                    "title": `BigBriceGaming has started streaming!`,
+                    "description": `You can watch the stream [here](https://www.twitch.tv/bigbricegaming)`,
+                    "color": Number("0x"+Math.floor(Math.random()*16777215).toString(16)),
+                    "footer": {
+                        "text": "*Information based on twitch and user settings."
+                    },
+                    "thumbnail": {
+                        "url": "https://static-cdn.jtvnw.net/jtv_user_pictures/0583698129a4fe0a-profile_image-300x300.png"
+                    },
+                    "fields": [{
+                        "name": `Streaming "FiveReloaded ~ Destiny 2 Giveaway!"`,
+                        "value": `Playing Grand Theft Auto V`
+                    }]
+                }
+            })
+        }
+    })
     }
   });
 
@@ -219,11 +251,14 @@ client.on("presenceUpdate", (old, user) => {
             if (!body) return
             let gamename = String(game.name)
             body = JSON.parse(body)
+            role.setMentionable(true)
+            notifications.send('<@&460105041563615234>')
+            role.setMentionable(false)
             notifications.send({
                 "embed": {
                     "title": `${user.displayName} has started streaming!`,
                     "description": `You can watch the stream [here](${game.url})`,
-                    "color": 13377970,
+                    "color": Number("0x"+Math.floor(Math.random()*16777215).toString(16)),
                     "footer": {
                         "text": "*Information based on twitch and user settings."
                     },
