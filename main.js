@@ -70,7 +70,6 @@ function ordinal_suffix_of(i) {
 
 client.on("message", async message => {
     if (!message.guild) return
-    if (message.content === "<@&460105041563615234>" && message.author.bot) return setTimeout(message.delete(), 500) 
     if(message.author.bot) return
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
