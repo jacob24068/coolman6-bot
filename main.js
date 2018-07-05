@@ -214,18 +214,22 @@ client.on("message", async message => {
           table.push(text)
         }
       })
+      table.splice(0, 1)
       table.forEach(function(text, index){
         if (!index == 0) {
-          fields.push({"name": alphabet[index-1], "value": text})
+          fields.push({"name": "Option " + alphabet[index-1], "value": text.replace(`"`, "")})
         }
       })
-      message.channel.send({
+      const msg = message.channel.send({
         "embed": {
             "title": `${message.member.displayName} has started a poll.`,
             "description": `${table[0]}`,
             "color": Number("0x"+Math.floor(Math.random()*16777215).toString(16)),
             "fields": fields
         }
+    })
+    fields.forEach(function(){
+      msg.react(alphabet[index])
     })
     }
   });
