@@ -210,7 +210,7 @@ client.on("message", async message => {
       let table = []
       let fields = []
       message.content.split(" ").forEach(function(text){
-        if (!thing.match(/\s/g)) {
+        if (!text.match(/\s/g)) {
           table.push(text)
         }
       })
