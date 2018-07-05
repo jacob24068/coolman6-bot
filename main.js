@@ -214,6 +214,7 @@ client.on("message", async message => {
           table.push(text)
         }
       })
+      message.delete()
       table.splice(0, 1)
       table.forEach(function(text, index){
         if (!index == 0) {
@@ -228,11 +229,10 @@ client.on("message", async message => {
             "fields": fields
         }
       }).then(function(message){
-        console.log(message)
+        fields.forEach(function(a, index){
+          message.react(alphabet[index])
+        })
       })
-    fields.forEach(function(a, index){
-      msg.react(alphabet[index])
-    })
     }
   });
 
