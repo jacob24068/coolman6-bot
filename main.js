@@ -235,7 +235,7 @@ client.on("message", async message => {
         })
       })
     }else if (command === "streamnotifications") {
-      if (!message.member.roles.some(r => ["StreamNotifications"].includes(r.name))) {
+      if (message.member.roles.some(r => ["StreamNotifications"].includes(r.name))) {
         message.member.removeRole(message.guild.roles.find('name', 'StreamNotifications'))
         message.channel.send('You will no longer be mentioned when Brice streams.')
       }else {
