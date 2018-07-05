@@ -228,7 +228,7 @@ client.on("message", async message => {
             "fields": fields
         }
     })
-    fields.forEach(function(){
+    fields.forEach(function(a, index){
       msg.react(alphabet[index])
     })
     }
