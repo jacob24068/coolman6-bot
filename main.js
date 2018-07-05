@@ -217,17 +217,19 @@ client.on("message", async message => {
       table.splice(0, 1)
       table.forEach(function(text, index){
         if (!index == 0) {
-          fields.push({"name": "Option " + alphabet[index-1], "value": text.replace(`"`, "")})
+          fields.push({"name": "Option " + alphabet[index-1], "value": text.replace(`"`, "").replace(`"`, "")})
         }
       })
       const msg = message.channel.send({
         "embed": {
             "title": `${message.member.displayName} has started a poll.`,
-            "description": `${table[0]}`,
+            "description": `${table[0].replace(`"`, "").replace(`"`, "")}`,
             "color": Number("0x"+Math.floor(Math.random()*16777215).toString(16)),
             "fields": fields
         }
-    })
+      }).catch(function(message){
+        console.log(message)
+      })
     fields.forEach(function(a, index){
       msg.react(alphabet[index])
     })
