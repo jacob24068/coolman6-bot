@@ -206,7 +206,7 @@ client.on("message", async message => {
         }
       })}
     }else if (command === "poll") {
-      if (!user.roles.some(r => ["Adminstrator", "Moderator", "Bot", "Brice"].includes(r.name))) return
+      if (!message.member.roles.some(r => ["Adminstrator", "Moderator", "Bot", "Brice"].includes(r.name))) return
       let table = []
       let fields = []
       message.content.split(" ").forEach(function(text){
