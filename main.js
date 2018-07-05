@@ -68,6 +68,8 @@ function ordinal_suffix_of(i) {
   return i + "th";
 }
 
+const alphabet = ["🇦", "🇧", "🇨", "🇩", "🇪", "🇫", "🇬", "🇭", "🇮", "🇯", "🇰", "🇱", "🇲", "🇳", "🇴", "🇵", "🇶", "🇷", "🇸", "🇹", "🇺", "🇻", "🇼", "🇽", "🇾", "🇿"]
+
 client.on("message", async message => {
     if (!message.guild) return
     if(message.author.bot) return
@@ -203,32 +205,26 @@ client.on("message", async message => {
           ]
         }
       })}
-    }else if (command === "teststream") {
-      if (!message.author.id == `188386891182112769`) return;
-      request(`https://api.twitch.tv/kraken/channels/bigbricegaming?client_id=${twitchid}`, function(err, res, body) {
-        if (body) {
-            if (!body) return
-            body = JSON.parse(body)
-            role.setMentionable(true)
-            notifications.send('<@&460105041563615234>')
-            role.setMentionable(false)
-            notifications.send({
-                "embed": {
-                    "title": `BigBriceGaming has started streaming!`,
-                    "description": `You can watch the stream [here](https://www.twitch.tv/bigbricegaming)`,
-                    "color": Number("0x"+Math.floor(Math.random()*16777215).toString(16)),
-                    "footer": {
-                        "text": "*Information based on twitch and user settings."
-                    },
-                    "thumbnail": {
-                        "url": "https://static-cdn.jtvnw.net/jtv_user_pictures/0583698129a4fe0a-profile_image-300x300.png"
-                    },
-                    "fields": [{
-                        "name": `Streaming "FiveReloaded ~ Destiny 2 Giveaway!"`,
-                        "value": `Playing Grand Theft Auto V`
-                    }]
-                }
-            })
+    }else if (command === "poll") {
+      if (!user.roles.some(r => ["Adminstrator", "Moderator", "Bot", "Brice"].includes(r.name))) return
+      let table = []
+      let fields = []
+      message.content.split(" ").forEach(function(text){
+        if (!thing.match(/\s/g)) {
+          table.push(text)
+        }
+      })
+      table.forEach(function(text, index){
+        if (!index == 0) {
+          fields.push({"name": alphabet[index-1], "value": text})
+        }
+      })
+      message.channel.send({
+        "embed": {
+            "title": `${message.member.displayName} has started a poll.`,
+            "description": `${table[0]}`,
+            "color": Number("0x"+Math.floor(Math.random()*16777215).toString(16)),
+            "fields": fields
         }
     })
     }
