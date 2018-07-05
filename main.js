@@ -234,6 +234,14 @@ client.on("message", async message => {
           message.react(alphabet[index])
         })
       })
+    }else if (command === "streamnotifications") {
+      if (!message.member.roles.some(r => ["StreamNotifications"].includes(r.name))) {
+        message.member.removeRole(message.guild.roles.find('name', 'StreamNotifications'))
+        message.channel.send('You will no longer be mentioned when Brice streams.')
+      }else {
+        message.member.addRole(message.guild.roles.find('name', 'StreamNotifications'))
+        message.channel.send('You will now be mentioned when Brice streams.')
+      }
     }
   });
 
