@@ -159,7 +159,7 @@ client.on("message", async message => {
       }else{
       message.channel.send({
         "embed": {
-          "title": "The Logic Lounge Leaderboard",
+          "title": "BBG Leaderboard",
           "color": Number("0x"+Math.floor(Math.random()*16777215).toString(16)),
           "fields": [
             {
