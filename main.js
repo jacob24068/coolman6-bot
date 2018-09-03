@@ -263,25 +263,26 @@ client.on("presenceUpdate", (old, user) => {
             if (!body) return
             let gamename = String(game.name)
             body = JSON.parse(body)
-            role.setMentionable(true)
-            notifications.send('<@&460105041563615234>')
-            role.setMentionable(false)
-            notifications.send({
-                "embed": {
-                    "title": `${user.displayName} has started streaming!`,
-                    "description": `You can watch the stream [here](${game.url})`,
-                    "color": Number("0x"+Math.floor(Math.random()*16777215).toString(16)),
-                    "footer": {
-                        "text": "*Information based on twitch and user settings."
-                    },
-                    "thumbnail": {
-                        "url": body["logo"]
-                    },
-                    "fields": [{
-                        "name": `Streaming "${game.name}"`,
-                        "value": `Playing ${body["game"]}`
-                    }]
-                }
+            role.setMentionable(true).then(function(){
+              notifications.send('<@&460105041563615234>')
+              role.setMentionable(false)
+              notifications.send({
+                  "embed": {
+                      "title": `${user.displayName} has started streaming!`,
+                      "description": `You can watch the stream [here](${game.url})`,
+                      "color": Number("0x"+Math.floor(Math.random()*16777215).toString(16)),
+                      "footer": {
+                          "text": "*Information based on twitch and user settings."
+                      },
+                      "thumbnail": {
+                          "url": body["logo"]
+                      },
+                      "fields": [{
+                          "name": `Streaming "${game.name}"`,
+                          "value": `Playing ${body["game"]}`
+                      }]
+                  }
+              })
             })
         }
     })
@@ -292,3 +293,16 @@ client.on('guildMemberAdd', member => {
 client.on('guildMemberRemove', member => {
     log.send(`${member} has left at ${new Date()}`)
 });
+client.on('messageDelete', message => {
+  log.send({
+    "embed": {
+      "title": `Message deleted`,
+      "color": Number("0x"+Math.floor(Math.random()*16777215).toString(16)),
+      "timestamp": new Date(),
+      "fields": [{
+        "name": `Message posted by ${message.author} in ${message.channel} deleted.`,
+        "value": message.content
+      }]
+    }
+  })
+})
