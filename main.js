@@ -242,6 +242,11 @@ client.on("message", async message => {
         message.member.addRole(message.guild.roles.find('name', 'StreamNotifications'))
         message.channel.send('You will now be mentioned when Brice streams.')
       }
+    }else if (command === "setpoints") {
+      const member = message.mentions.members.first()
+      let number = args.slice(0).join(' ');
+      if (!message.member.roles.some(r => ["Adminstrator", "Moderator", "Bot", "Brice"].includes(r.name))) return
+      saveData[member.id] = number
     }
   });
 
