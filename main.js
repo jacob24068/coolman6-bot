@@ -245,6 +245,8 @@ client.on("message", async message => {
     }else if (command === "setpoints") {
       const member = message.mentions.members.first()
       let number = args.slice(0).join(' ');
+      console.log(member)
+      console.log(number)
       if (!message.member.roles.some(r => ["Adminstrator", "Moderator", "Bot", "Brice"].includes(r.name))) return
       saveData[member.id] = number
     }
