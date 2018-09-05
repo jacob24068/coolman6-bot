@@ -248,7 +248,7 @@ client.on("message", async message => {
       console.log(member)
       console.log(number)
       if (!message.member.roles.some(r => ["Adminstrator", "Moderator", "Bot", "Brice"].includes(r.name))) return
-      saveData[member.id] = number
+      saveData[member.id] = Number(number)
     }
   });
 
